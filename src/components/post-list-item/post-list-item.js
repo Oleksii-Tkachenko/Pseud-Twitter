@@ -12,7 +12,7 @@ export default class PostListItem extends Component {
         this.onImportant = this.onImportant.bind(this);
         this.onLike = this.onLike.bind(this);
     }
-
+    
     onImportant() {
         this.setState(({important}) => ({
             important: !important
