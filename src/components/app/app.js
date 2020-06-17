@@ -29,8 +29,7 @@ export default class App extends Component {
         };
         this.deleteItem = this.deleteItem.bind(this);
         this.addItem = this.addItem.bind(this);
-        this.onToggleImportant = this.onToggleImportant.bind(this);
-        this.onToggleLiked = this.onToggleLiked.bind(this);
+        this.onToggle = this.onToggle.bind(this);
         this.onUpdateSearch = this.onUpdateSearch.bind(this);
         this.onFilterSelect = this.onFilterSelect.bind(this);
 
@@ -62,28 +61,19 @@ export default class App extends Component {
         })
     }
 
-    onToggleImportant(id) {
+    onToggle(id, instance) {
         this.setState(({data}) => {
             const index = data.findIndex(elem => elem.id === id);
 
             const old = data[index];
-            const newItem = {...old, important: !old.important};
+            let newItem = {};
 
-            const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
-
-            return {
-                data: newArr
+            if(instance==='like'){
+                newItem = {...old, like: !old.like};
+            } else {
+                newItem = {...old, important: !old.important};
             }
-        }) 
-    }
-
-    onToggleLiked(id) {
-        this.setState(({data}) => {
-            const index = data.findIndex(elem => elem.id === id);
-
-            const old = data[index];
-            const newItem = {...old, like: !old.like};
-
+            
             const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
 
             return {
@@ -124,7 +114,6 @@ export default class App extends Component {
         const allPosts = data.length;
 
         const visiblePosts = this.filterPost(this.searchPost(data, term), filter);
-
         return (
             <AppBlock>
                 <AppHeader
@@ -142,8 +131,7 @@ export default class App extends Component {
                 <PostList 
                     posts={visiblePosts}
                     onDelete={this.deleteItem}
-                    onToggleImportant={this.onToggleImportant}
-                    onToggleLiked={this.onToggleLiked}
+                    onToggle={this.onToggle}
                     />
                 <PostAddForm
                     onAdd={this.addItem}/>

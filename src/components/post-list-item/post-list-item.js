@@ -5,7 +5,7 @@ import './post-list-item.css';
 export default class PostListItem extends Component {
 
     render() {
-        const {label, onDelete, onToggleImportant, onToggleLiked, important, like} = this.props;
+        const {label, onDelete, onToggle, important, like} = this.props;
         let classNames ='app-list-item d-flex justify-content-between'
         if (important) {
             classNames +=' important'
@@ -17,14 +17,14 @@ export default class PostListItem extends Component {
             <div className={classNames}>
                 <span 
                 className="app-list-item-label"
-                onClick={onToggleLiked}>
+                onClick={()=>onToggle('like')}>
                     {label}
                 </span>
                 <div className="d-flex justify-content-center align-items-center">
                     <button 
                         type="button" 
                         className="btn-star btn-sm"
-                        onClick={onToggleImportant}>
+                        onClick={()=>onToggle("important")}>
                         <i className="fa fa-star"></i>
                     </button>
                     <button 
